@@ -1,0 +1,136 @@
+* {
+    box-sizing: border-box;
+}
+
+body { 
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+    background-color: #121212;
+    padding: 0;
+    margin: 0;
+}
+
+h1, h4 {
+    color: #fff;
+    margin: 0;
+}
+
+h5, p {
+    margin: 0;
+}
+
+.main-container {
+    margin: 150px auto;
+    max-width: 550px;
+    padding: 0;
+}
+
+.sub-container {
+    margin: 0;
+}
+
+/* TITLE TAB CSS START*/
+
+.title-section {
+    position: relative;
+    margin-bottom: 61px;
+    padding-top: 83px;
+    padding-bottom: 78px;
+}
+
+.title-section::before {
+    content: "";
+    background-image: url(images/movie-room.jpg);
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.3;
+}
+
+.title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 44px;
+}
+
+.title-container #find-your-film {
+    color: #ffffff;
+    font-size: 42.79px;
+    font-weight: 800;
+    position: relative;
+}
+
+.title-container #my-watchlist {
+    color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* TITLE TAB CSS START*/
+
+/* MOVIE TAB CSS START*/
+
+.movie-list-section {
+    margin: 0 44px;
+}
+
+.movie-tab {
+    display: flex;
+    justify-content: center;
+    padding-top: 21px;
+    margin-bottom: 25px;
+    border-bottom: solid 3px #2C2C2C;
+}
+
+.movie-title-container {
+    display: flex;
+    align-items: center;
+}
+
+.movie-title-container .star {
+    font-size: 12px;
+    padding-left: 10px;
+}
+
+.movie-image-container {
+    text-align: center;
+    padding-bottom: 21px;
+    margin: 0;
+}
+
+.movie-image {
+    width: 99px;
+    height: 148px;
+}
+
+.movie-title {
+    font-size: 18px;
+}
+
+.movie-info-container {
+    padding-top: 15px;
+    padding-left: 21px;
+}
+
+.movie-detail-info-container {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    margin: 10px 0;
+}
+
+.movie-detail-info-container p {
+    padding-right: 20px;
+}
+
+.movie-description {
+    color: #A5A5A5;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+/* MOVIE TAB CSS END*/
