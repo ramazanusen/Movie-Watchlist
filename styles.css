@@ -19,8 +19,10 @@ h5, p {
     margin: 0;
 }
 
+/* CONTAINERS CSS START*/
 .main-container {
     margin: 150px auto;
+    min-width: 550px;
     max-width: 550px;
     padding: 0;
 }
@@ -28,6 +30,7 @@ h5, p {
 .sub-container {
     margin: 0;
 }
+/* CONTAINERS CSS END*/
 
 /* TITLE TAB CSS START*/
 
@@ -51,6 +54,7 @@ h5, p {
 }
 
 .title-container {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -70,6 +74,12 @@ h5, p {
     cursor: pointer;
 }
 
+#search-bar {
+    position: absolute;
+    top: 118px;
+    right: 150px;
+}
+
 /* TITLE TAB CSS START*/
 
 /* MOVIE TAB CSS START*/
@@ -83,7 +93,7 @@ h5, p {
     justify-content: center;
     padding-top: 21px;
     margin-bottom: 25px;
-    border-bottom: solid 3px #2C2C2C;
+    border-bottom: solid 2px #2C2C2C;
 }
 
 .movie-title-container {
