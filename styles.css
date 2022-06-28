@@ -74,10 +74,17 @@ h5, p {
     cursor: pointer;
 }
 
+.search-container {
+    position: relative;
+    align-items: center;
+    display: flex;
+}
+
 #search-bar {
-    position: absolute;
+    /*position: absolute;
     top: 118px;
-    right: 150px;
+    right: 150px;*/
+    width: 100%;
 }
 
 /* TITLE TAB CSS START*/
@@ -94,6 +101,10 @@ h5, p {
     padding-top: 21px;
     margin-bottom: 25px;
     border-bottom: solid 2px #2C2C2C;
+}
+
+.movie-tab:last-child {
+    border-bottom: none;
 }
 
 .movie-title-container {
