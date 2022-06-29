@@ -1,5 +1,5 @@
 
-const apiKey = "85e0ddaa475644eb02168b3435eb2efb"
+const apiKey = ""
 
 function getMovieByTitle(moviteTitle, apiKey){
     fetch("https://api.themoviedb.org/3/search/movie?api_key="+apiKey+"&language=en-US&query="+moviteTitle)
