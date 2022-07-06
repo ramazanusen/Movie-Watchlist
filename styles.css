@@ -1,14 +1,13 @@
 * {
-    box-sizing: border-box;
+    
 }
 
 body { 
-    font-family: 'Inter', sans-serif;
     color: #fff;
-    background-color: #121212;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
     padding: 0;
     margin: 0;
-    font-size: 1rem;
 }
 
 h1, h4 {
@@ -26,6 +25,7 @@ h5, p {
     min-width: 550px;
     max-width: 550px;
     padding: 0;
+    background-color: #121212;
 }
 
 .sub-container {
@@ -83,7 +83,7 @@ h5, p {
     width: 462px;
 }
 
-#search-bar {
+#search-field {
     background-color: #2E2E2F;
     border: none;
     border-top-left-radius: 7px;
@@ -178,7 +178,7 @@ h5, p {
     padding-right: 20px;
 }
 
-#add-watchlist:hover {
+.add-watchlist:hover {
     cursor: pointer;
 }
 
@@ -186,6 +186,7 @@ h5, p {
     color: #A5A5A5;
     font-size: 0.875rem;
     line-height: 20px;
+    padding-bottom: 20px;
 }
 
 /* MOVIE TAB CSS END*/

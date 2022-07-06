@@ -1,7 +1,26 @@
 
-const apiKey = ""
-const movieListEl = document.querySelector(".movie-list-section")
+import {Movie} from movieData.js
+
+const apiKey = "85e0ddaa475644eb02168b3435eb2efb"
 const imageUrl = "https://image.tmdb.org/t/p/w200"
+
+const movieListEl = document.querySelector(".movie-list-section")
+const searchFieldEl = document.getElementById("search-field")
+const searchButtonEl = document.getElementById("search-button")
+
+/*const movieListProperty =
+{
+    movieId: "",
+    movieName: "",
+    moviePoster: "",
+    movieRating: "",
+    movieLength: "",
+    movieGenre: [],
+    movieDescription: "",
+    //belki property yapıp onları arraye doldurabilirim. her bir film için ayrı watchlist yapamadım
+}*/
+
+const movieListArray = []
 
 function getMovieById(moviteTitle, apiKey){
     fetch("https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&query=" + moviteTitle + "&include_adult=false")
@@ -18,44 +37,78 @@ function getMovieTitle(movieId, apiKey) {
     .then(response => response.json())
     .then(data => {
         console.log(data)
-        const movieGenre = []
-        const movieRating = data.vote_average
+        
+        movieListProperty.movieId = movieId
+        movieListProperty.movieName = data.original_title
+        movieListProperty.moviePoster = data.poster_path
+        movieListProperty.movieRating = data.vote_average
+        movieListProperty.movieLength = data.runtime
+        movieListProperty.movieGenre = []
+        movieListProperty.movieDescription = data.overview
+        
+        
 
         if(data.genres.length > 0){
             for(let i = 0; i < data.genres.length; i++){
-                movieGenre.push(data.genres[i].name)
+                movieListProperty.movieGenre.push(data.genres[i].name)
             }
         }
         else {
-            movieGenre.push("No genre data")
+            movieListProperty.movieGenre.push("No genre data")
         }
 
-       
-        movieListEl.innerHTML += `
+        movieListEl.innerHTML += 
+        `
             <div class="movie-tab">
                         <div class="movie-image-container">
-                            <img class="movie-image" src="${imageUrl+data.poster_path}">
+                            <img class="movie-image" src="${imageUrl + movieListProperty.moviePoster}">
                         </div>
 
                         <div class="movie-info-container">
                             <div class="movie-title-container">
-                                <h5 class="movie-title">${data.original_title}</h5>
-                                <p class="star">⭐${movieRating}</p>
+                                <h5 class="movie-title">${movieListProperty.movieName}</h5>
+                                <p class="star">⭐${movieListProperty.movieRating}</p>
                             </div>
-                            
+
                             <div class="movie-detail-info-container">
-                                <p>${data.runtime} min</p>
-                                <p>${movieGenre.join(", ")}</p>
-                                <p id="add-watchlist">➕ Watchlist</p> 
+                                <p>${movieListProperty.movieLength} min</p>
+                                <p>${movieListProperty.movieGenre.join(", ")}</p>
+                                <p class="add-watchlist" id="${movieListProperty.movieId}">➕ Watchlist</p> 
                             </div>
                             <p class="movie-description">
-                                ${data.overview}
+                                ${movieListProperty.movieDescription}
                             </p>
                         </div>
 
                     </div>
         `
+        for(let i = 0; i < data.length; i++){
+            movieListArray[i] = movieListProperty
+        }
+        movieListArray.push(movieListProperty)//son gelen datanın hepsini arraya atıyor. diğerleri yok. burada kaldım
+        console.log(movieListArray)
+
+        const addWatchListEl = document.querySelector(".add-watchlist")
+        addWatchListEl.addEventListener("click", () => 
+        {
+            console.log(addWatchListEl.getAttribute("id"))
+        })
     })
 }
 
-getMovieById("matrix", apiKey)
+
+
+
+searchButtonEl.addEventListener("click", getValue)
+
+function getValue() {
+    clearMovieList()
+    getMovieById(searchFieldEl.value, apiKey)
+}
+
+function clearMovieList() {
+    movieListEl.innerHTML = ""
+}
+
+//enter tuşuna basınca arama yapsın
+//watchliste ile localstorage'a film ekleme yapalım
