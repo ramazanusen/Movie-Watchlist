@@ -178,6 +178,10 @@ h5, p {
     padding-right: 20px;
 }
 
+.add-watchlist {
+    padding-right: 10px;
+}
+
 .add-watchlist:hover {
     cursor: pointer;
 }
