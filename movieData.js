@@ -1,13 +1,11 @@
-class Movie {
-    constructor(){
-        this.movieId = "";
-        this.movieName = "";
-        this.moviePoster = "";
-        this.movieRating = "";
-        this.movieLength = "";
-        this.movieGenre = [];
-        this.movieDescription = "";
-    }
+const Movie = {
+    movieId : "",
+    movieName : "",
+    moviePoster : "",
+    movieRating : "",
+    movieLength : "",
+    movieGenre : [],
+    movieDescription : ""
 }
 
 export {Movie}

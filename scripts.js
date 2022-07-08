@@ -8,8 +8,8 @@ const movieListEl = document.querySelector(".movie-list-section")
 const searchFieldEl = document.getElementById("search-field")
 const searchButtonEl = document.getElementById("search-button")
 
-
 let movieListArray = []
+let movieTabNum = 0
 
 function getMovieById(moviteTitle, apiKey){
     fetch("https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&query=" + moviteTitle + "&include_adult=false")
@@ -22,21 +22,24 @@ function getMovieById(moviteTitle, apiKey){
 }
 
 function getMovieTitle(movieId, apiKey) {
+    movieTabNum = 0
     movieListArray = []
     fetch("https://api.themoviedb.org/3/movie/" + movieId +"?api_key=" + apiKey + "&language=en-US")
     .then(response => response.json())
     .then(data => {
         console.log(data)
         
-        Movie.movieId = movieId
-        Movie.movieName = data.original_title
-        Movie.moviePoster = data.poster_path
-        Movie.movieRating = data.vote_average
-        Movie.movieLength = data.runtime
-        Movie.movieGenre = []
-        Movie.movieDescription = data.overview
+        const Movie = {
+            movieId: movieId,
+            movieName: data.original_title,
+            moviePoster: data.poster_path,
+            movieRating : data.vote_average,
+            movieLength : data.runtime,
+            movieGenre : [],
+            movieDescription: data.overview
+        }
 
-        movieListArray.push(Object.entries(Movie))
+        movieListArray.push(Movie)
         console.log(movieListArray)
         
         if(data.genres.length > 0){
@@ -50,7 +53,7 @@ function getMovieTitle(movieId, apiKey) {
 
         movieListEl.innerHTML += 
         `
-            <div class="movie-tab">
+            <div class="movie-tab" id="movie-tab-${movieTabNum}">
                         <div class="movie-image-container">
                             <img class="movie-image" src="${imageUrl + Movie.moviePoster}">
                         </div>
@@ -72,14 +75,19 @@ function getMovieTitle(movieId, apiKey) {
                         </div>
                     </div>
         `
-        
+        movieTabNum += 1
         const addWatchListEl = document.querySelector(".add-watchlist")
         //const movieWatchlistId = addWatchListEl.getAttribute("id")
         addWatchListEl.addEventListener("click", () => 
         {
-            console.log(movieId)
+            getMovieInfo(document.getElementById(getAttribute("id"))) //burada kaldım. waathclist hala tek bir şeyi basıyor.
         })
     })
+    
+}
+
+function getMovieInfo (tabID) {
+    document.getElementById("movie-tab"+tabID)
 }
 
 searchButtonEl.addEventListener("click", getValue)
