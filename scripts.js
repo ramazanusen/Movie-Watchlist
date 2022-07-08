@@ -80,14 +80,15 @@ function getMovieTitle(movieId, apiKey) {
         //const movieWatchlistId = addWatchListEl.getAttribute("id")
         addWatchListEl.addEventListener("click", () => 
         {
-            getMovieInfo(document.getElementById(getAttribute("id"))) //burada kaldım. waathclist hala tek bir şeyi basıyor.
+            getMovieInfo(movieTabNum) //burada kaldım. waathclist hala tek bir şeyi basıyor.
+            console.log("ID of this element: "+this.id)
         })
     })
     
 }
 
 function getMovieInfo (tabID) {
-    document.getElementById("movie-tab"+tabID)
+    console.log(movieListArray[tabID])
 }
 
 searchButtonEl.addEventListener("click", getValue)
