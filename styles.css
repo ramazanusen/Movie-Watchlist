@@ -1,5 +1,5 @@
 * {
-    
+    box-sizing: border-box;
 }
 
 body { 
@@ -17,6 +17,10 @@ h1, h4 {
 
 h5, p {
     margin: 0;
+}
+
+a {
+    text-decoration: none;
 }
 
 /* CONTAINERS CSS START*/
@@ -190,7 +194,7 @@ h5, p {
     color: #A5A5A5;
     font-size: 0.875rem;
     line-height: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 30px;
 }
 
 /* MOVIE TAB CSS END*/
