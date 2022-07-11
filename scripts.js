@@ -12,7 +12,6 @@ let movieListArray = []
 let movieTabNum = 0
 let watchlistMovie = ""
 
-
 function getMovieById(moviteTitle, apiKey){
     fetch("https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&query=" + moviteTitle + "&include_adult=false")
         .then(response => response.json())
@@ -53,7 +52,6 @@ function getMovieTitle(movieId, apiKey) {
             Movie.movieGenre.push("No genre data")
         }
 
-        
             movieListEl.innerHTML += 
             `
                 <div class="movie-tab" id="movie-tab-${movieTabNum}">
@@ -108,8 +106,6 @@ function clearMovieList() {
     movieListEl.innerHTML = ""
 }
 
-document.getElementById("get-local").addEventListener("click", () => JSON.parse(localStorage.getItem("movie1")))
-
 document.getElementById("my-watchlist")?.addEventListener("click", () => {
     writeWatchlist()
 })
@@ -118,7 +114,6 @@ function writeWatchlist (){
     console.log("MY WATCHLIST: " + watchlistMovie.movieName)
     watchlistEl.innerHTML += 
     `
-        <p>YAPRAK BU, DUDAK ARASINA KOYUYON BÖÖLE</p>
         <div class="movie-tab" id="movie-tab-${movieTabNum}">
             <div class="movie-image-container">
                 <img class="movie-image" src="${imageUrl + watchlistMovie.moviePoster}">
