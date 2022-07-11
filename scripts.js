@@ -83,16 +83,19 @@ function getMovieTitle(movieId, apiKey) {
             addWatchList.addEventListener("click", () => {
                 getMovieInfo(addWatchList.getAttribute("id"))
             })
+
         })
         
     })
     
 }
 
+
 function getMovieInfo (tabId) {
     localStorage.setItem("movie"+tabId, JSON.stringify(movieListArray[tabId]))
     watchlistMovie = JSON.parse(localStorage.getItem("movie"+tabId))
     console.log("MY WATCHLIST: " + watchlistMovie.movieName)
+
 }
 
 searchButtonEl.addEventListener("click", getValue)
