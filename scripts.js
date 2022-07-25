@@ -92,7 +92,7 @@ function getMovieTitle(movieId, apiKey) {
 function getMovieInfo (tabId) {
     localStorage.setItem("movie"+tabId, JSON.stringify(movieListArray[tabId]))
     watchlistMovie = JSON.parse(localStorage.getItem("movie"+tabId))
-    console.log("MY WATCHLIST: " + watchlistMovie.movieName)
+    console.log("MY WATCHLIST: " + watchlistMovie)
 }
 
 searchButtonEl.addEventListener("click", getValue)
@@ -111,29 +111,32 @@ document.getElementById("my-watchlist")?.addEventListener("click", () => {
 })
 
 function writeWatchlist (){
+    clearMovieList()
     console.log("MY WATCHLIST: " + watchlistMovie.movieName)
-    watchlistEl.innerHTML += 
-    `
-        <div class="movie-tab" id="movie-tab-${movieTabNum}">
-            <div class="movie-image-container">
-                <img class="movie-image" src="${imageUrl + watchlistMovie.moviePoster}">
-            </div>
-
-            <div class="movie-info-container">
-                <div class="movie-title-container">
-                    <h5 class="movie-title">${watchlistMovie.movieName}</h5>
-                    <p class="star">⭐${watchlistMovie.movieRating}</p>
+    for(let i = 0; i < localStorage.length; i++){
+        movieListEl.innerHTML += 
+        `
+            <div class="movie-tab" id="movie-tab-${movieTabNum}">
+                <div class="movie-image-container">
+                    <img class="movie-image" src="${imageUrl + JSON.parse(localStorage.getItem('movie' + i)).moviePoster}">
                 </div>
 
-                <div class="movie-detail-info-container">
-                    <p>${watchlistMovie.movieLength} min</p>
-                    <p>${watchlistMovie.movieGenre.join(", ")}</p>
-                    <p class="add-watchlist" id="${movieTabNum}">➕ Watchlist</p> 
+                <div class="movie-info-container">
+                    <div class="movie-title-container">
+                        <h5 class="movie-title">${JSON.parse(localStorage.getItem('movie' + i)).movieName}</h5>
+                        <p class="star">⭐${JSON.parse(localStorage.getItem('movie' + i)).movieRating}</p>
+                    </div>
+
+                    <div class="movie-detail-info-container">
+                        <p>${JSON.parse(localStorage.getItem('movie' + i)).movieLength} min</p>
+                        <p>${JSON.parse(localStorage.getItem('movie' + i)).movieGenre.join(", ")}</p>
+                        <p class="add-watchlist" id="${movieTabNum}">➕ Watchlist</p> 
+                    </div>
+                    <p class="movie-description">
+                        ${JSON.parse(localStorage.getItem('movie' + i)).movieDescription}
+                    </p>
                 </div>
-                <p class="movie-description">
-                    ${watchlistMovie.movieDescription}
-                </p>
             </div>
-        </div>
-    `
+        `
+    }
 }

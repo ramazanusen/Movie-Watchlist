@@ -131,10 +131,11 @@ a {
 
 .movie-tab {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     padding-top: 21px;
+    padding-bottom: 19px;
     margin-bottom: 25px;
-    border-bottom: solid 2px #2C2C2C;
+    border-bottom: solid 1.5px #2C2C2C;
 }
 
 .movie-tab:last-child {
