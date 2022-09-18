@@ -10,7 +10,7 @@ const myWatchListEl = document.getElementById("my-watchlist")
 
 let movieListArray = []
 let movieTabNum = 0
-let watchlistMovie = ""
+let watchlistMovieList = []
 
 function getMovieById(moviteTitle, apiKey){
     fetch("https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&query=" + moviteTitle + "&include_adult=false")
@@ -41,7 +41,7 @@ function getMovieTitle(movieId, apiKey) {
         }
 
         movieListArray.push(Movie)
-        console.log(movieListArray)
+         console.log(movieListArray)
         
         if(data.genres.length > 0){
             for(let i = 0; i < data.genres.length; i++){
@@ -62,7 +62,7 @@ function getMovieTitle(movieId, apiKey) {
                             <div class="movie-info-container">
                                 <div class="movie-title-container">
                                     <h5 class="movie-title">${movieListArray[movieTabNum].movieName}</h5>
-                                    <p class="star">⭐${movieListArray[movieTabNum].movieRating}</p>
+                                    <p class="star">⭐${(movieListArray[movieTabNum].movieRating).toFixed(1)}</p>
                                 </div>
 
                                 <div class="movie-detail-info-container">
@@ -79,28 +79,29 @@ function getMovieTitle(movieId, apiKey) {
         
         movieTabNum += 1
         const addWatchListEl = document.querySelectorAll(".add-watchlist")
-        addWatchListEl.forEach(addWatchList => {
-            addWatchList.addEventListener("click", () => {
-                getMovieInfo(addWatchList.getAttribute("id"))
+        addWatchListEl.forEach(addWatchListItem => {
+            addWatchListItem.addEventListener("click", () => {
+                getMovieInfo(addWatchListItem.getAttribute("id"))
             })
-
-        })
-        
+        })  
     })
-    
 }
-
 
 function getMovieInfo (tabId) {
     localStorage.setItem("movie"+tabId, JSON.stringify(movieListArray[tabId]))
-    watchlistMovie = JSON.parse(localStorage.getItem("movie"+tabId))
-    console.log("MY WATCHLIST: " + watchlistMovie.movieName)
-
+    watchlistMovieList.push(JSON.parse(localStorage.getItem("movie"+tabId)))
+    
+    watchlistMovieList.forEach(element => {
+        console.log("MOVIE NAME: " + element.movieName)
+        console.log("MY DURATION: " + element.movieLength)
+        console.log("MY MOVIE STAR: " + element.movieRating.toFixed(1))
+    });
+    console.log(JSON.parse(localStorage.getItem("movie" + tabId)))
 }
 
-searchButtonEl.addEventListener("click", getValue)
+searchButtonEl.addEventListener("click", getSearchValueFromUser)
 
-function getValue() {
+function getSearchValueFromUser() {
     clearMovieList()
     getMovieById(searchFieldEl.value, apiKey)
 }
@@ -109,32 +110,37 @@ function clearMovieList() {
     movieListEl.innerHTML = ""
 }
 
-document.getElementById("my-watchlist")?.addEventListener("click", () => {
+document.getElementById("my-watchlist").addEventListener("click", () => {
     writeWatchlist()
-})
+}) 
 
 function writeWatchlist (){
-    console.log("MY WATCHLIST: " + watchlistMovie.movieName)
+    clearMovieList()
+
+    console.log(watchlistMovieList.movieName)
+
+    searchFieldEl.value = ""
+    console.log("MY WATCHLIST: " + watchlistMovieList.movieName)
     watchlistEl.innerHTML += 
-    `
+    `<p>BURADA FİLM OLACAK MI</p>
         <div class="movie-tab" id="movie-tab-${movieTabNum}">
             <div class="movie-image-container">
-                <img class="movie-image" src="${imageUrl + watchlistMovie.moviePoster}">
+                <img class="movie-image" src="${imageUrl + watchlistMovieList.moviePoster}">
             </div>
 
             <div class="movie-info-container">
                 <div class="movie-title-container">
-                    <h5 class="movie-title">${watchlistMovie.movieName}</h5>
-                    <p class="star">⭐${watchlistMovie.movieRating}</p>
+                    <h5 class="movie-title">${watchlistMovieList.movieName}</h5>
+                    <p class="star">⭐${watchlistMovieList.movieRating}</p>
                 </div>
 
                 <div class="movie-detail-info-container">
-                    <p>${watchlistMovie.movieLength} min</p>
-                    <p>${watchlistMovie.movieGenre.join(", ")}</p>
+                    <p>${watchlistMovieList.movieLength} min</p>
+                    <p>${watchlistMovieList.movieGenre.join(", ")}</p>
                     <p class="add-watchlist" id="${movieTabNum}">➕ Watchlist</p> 
                 </div>
                 <p class="movie-description">
-                    ${watchlistMovie.movieDescription}
+                    ${watchlistMovieList.movieDescription}
                 </p>
             </div>
         </div>
