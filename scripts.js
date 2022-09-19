@@ -7,6 +7,8 @@ const watchlistEl = document.querySelector(".watchlist-section")
 const searchFieldEl = document.getElementById("search-field")
 const searchButtonEl = document.getElementById("search-button")
 const myWatchListEl = document.getElementById("my-watchlist")
+const clearStorageEl = document.getElementById("clear-storage")
+const showStorageEl = document.getElementById("show-storage")
 
 let movieListArray = []
 let movieTabNum = 0
@@ -88,27 +90,102 @@ function getMovieTitle(movieId, apiKey) {
 }
 
 function getMovieInfo (tabId) {
-    localStorage.setItem("movie"+tabId, JSON.stringify(movieListArray[tabId]))
-    watchlistMovieList.push(JSON.parse(localStorage.getItem("movie"+tabId)))
+    localStorage.setItem(movieListArray[tabId].movieId, JSON.stringify(movieListArray[tabId]))
+    watchlistMovieList.push(JSON.parse(localStorage.getItem(movieListArray[tabId].movieId+ "movie"+tabId)))
     
-    watchlistMovieList.forEach(element => {
+    /*watchlistMovieList.forEach(element => {
         console.log("MOVIE NAME: " + element.movieName)
         console.log("MY DURATION: " + element.movieLength)
         console.log("MY MOVIE STAR: " + element.movieRating.toFixed(1))
-    });
+    });*/
+
+    
+        
     console.log(JSON.parse(localStorage.getItem("movie" + tabId)))
 }
 
+/**********SEARCH BUTTON ****************/
 searchButtonEl.addEventListener("click", getSearchValueFromUser)
 
 function getSearchValueFromUser() {
     clearMovieList()
     getMovieById(searchFieldEl.value, apiKey)
 }
+/**********SEARCH BUTTON ****************/
 
 function clearMovieList() {
     movieListEl.innerHTML = ""
 }
+
+/*************LOCAL STORAGE**************/
+
+clearStorageEl.addEventListener("click", () => {
+    clearLocalStorage()
+})
+
+showStorageEl.addEventListener("click", () => {
+    showLocalStorage()
+})
+
+function showLocalStorage() {
+    
+    clearMovieList()
+    for (let i = 0; i < localStorage.length; i++) {
+        console.log("local storage items: " + localStorage.key(i))
+        console.log(JSON.parse(localStorage.getItem(localStorage.key(i))).movieName)
+        
+
+        movieListEl.innerHTML +=
+            `
+                <div class="movie-tab">
+                            <div class="movie-image-container" id="movie-tab-${JSON.parse(localStorage.getItem(localStorage.key(i))).movieId}">
+                                <img class="movie-image" src="${imageUrl + JSON.parse(localStorage.getItem(localStorage.key(i))).moviePoster}">
+                            </div>
+
+                            <div class="movie-info-container">
+                                <div class="movie-title-container">
+                                    <h5 class="movie-title">${JSON.parse(localStorage.getItem(localStorage.key(i))).movieName}</h5>
+                                    <p class="star">⭐${(JSON.parse(localStorage.getItem(localStorage.key(i))).movieRating).toFixed(1)}</p>
+                                </div>
+
+                                <div class="movie-detail-info-container">
+                                    <p>${JSON.parse(localStorage.getItem(localStorage.key(i))).movieLength} min</p>
+                                    <p>${JSON.parse(localStorage.getItem(localStorage.key(i))).movieGenre.join(", ")}</p>
+                                    <p class="delete-watchlist" id="${JSON.parse(localStorage.getItem(localStorage.key(i))).movieId}">➖ Watchlist</p> 
+                                </div>
+                                <p class="movie-description">
+                                    ${JSON.parse(localStorage.getItem(localStorage.key(i))).movieDescription}
+                                </p>
+                            </div>
+                        </div>
+            `
+
+
+        const watchlistRemoveEl = document.querySelectorAll(".delete-watchlist")
+        watchlistRemoveEl.forEach(deleteWatchListButton => {
+            deleteWatchListButton.addEventListener("click", () => {
+                removeItemFromWatchlist(deleteWatchListButton.getAttribute("id"))
+            })
+        })
+    }
+    
+    console.log("Local storage lenght: " + localStorage.length)
+    console.log("SHOWED LOCAL STORAGE")
+}
+
+function removeItemFromWatchlist(keyNumber){
+    console.log("Item " + keyNumber + "removed from watchlist.")
+    localStorage.removeItem(keyNumber)
+}
+
+function clearLocalStorage(){
+    localStorage.clear()
+    console.log("Local Storage Cleared!")
+}
+/*************LOCAL STORAGE**************/
+
+
+//************WATCHLIST SECTION************
 
 document.getElementById("my-watchlist").addEventListener("click", () => {
     writeWatchlist()

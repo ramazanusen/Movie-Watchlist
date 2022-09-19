@@ -182,11 +182,11 @@ a {
     padding-right: 20px;
 }
 
-.add-watchlist {
+.add-watchlist, .delete-watchlist {
     padding-right: 10px;
 }
 
-.add-watchlist:hover {
+.add-watchlist:hover, .delete-watchlist:hover {
     cursor: pointer;
 }
 
