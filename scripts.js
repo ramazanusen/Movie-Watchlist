@@ -4,11 +4,15 @@ const imageUrl = "https://image.tmdb.org/t/p/w200"
 
 const movieListEl = document.querySelector(".movie-list-section")
 const watchlistEl = document.querySelector(".watchlist-section")
+const searchBarContainerEl = document.querySelector(".search-container")
 const searchFieldEl = document.getElementById("search-field")
 const searchButtonEl = document.getElementById("search-button")
 const myWatchListEl = document.getElementById("my-watchlist")
+const searchForMoviesEl = document.getElementById("search-for-movies");
 const clearStorageEl = document.getElementById("clear-storage")
 const showStorageEl = document.getElementById("show-storage")
+const findYourFilmTitleEl = document.getElementById("find-your-film")
+
 
 let movieListArray = []
 let movieTabNum = 0
@@ -19,12 +23,12 @@ function getMovieById(moviteTitle, apiKey){
         .then(response => response.json())
         .then(data => {
             for(let i = 0; i < data.results.length; i++){
-                getMovieTitle(data.results[i].id, apiKey)
+                getMovieTitleById(data.results[i].id, apiKey)
             }
         })
 }
 
-function getMovieTitle(movieId, apiKey) {
+function getMovieTitleById(movieId, apiKey) {
     movieTabNum = 0
     movieListArray = []
     fetch("https://api.themoviedb.org/3/movie/" + movieId +"?api_key=" + apiKey + "&language=en-US")
@@ -53,6 +57,8 @@ function getMovieTitle(movieId, apiKey) {
         else {
             Movie.movieGenre.push("No genre data")
         }
+
+
 
             movieListEl.innerHTML += 
             `
@@ -87,20 +93,13 @@ function getMovieTitle(movieId, apiKey) {
             })
         })  
     })
+    .catch((error) => {
+        throw error
+    })
 }
 
 function getMovieInfo (tabId) {
     localStorage.setItem(movieListArray[tabId].movieId, JSON.stringify(movieListArray[tabId]))
-    watchlistMovieList.push(JSON.parse(localStorage.getItem(movieListArray[tabId].movieId+ "movie"+tabId)))
-    
-    /*watchlistMovieList.forEach(element => {
-        console.log("MOVIE NAME: " + element.movieName)
-        console.log("MY DURATION: " + element.movieLength)
-        console.log("MY MOVIE STAR: " + element.movieRating.toFixed(1))
-    });*/
-
-    
-        
     console.log(JSON.parse(localStorage.getItem("movie" + tabId)))
 }
 
@@ -119,16 +118,32 @@ function clearMovieList() {
 
 /*************LOCAL STORAGE**************/
 
-clearStorageEl.addEventListener("click", () => {
-    clearLocalStorage()
-})
+clearStorageEl.addEventListener("click", clearLocalStorage)
 
-showStorageEl.addEventListener("click", () => {
+showStorageEl.addEventListener("click", showLocalStorage)
+
+myWatchListEl.addEventListener("click", () => {
+    myWatchListEl.classList.add("hide-element")
+    myWatchListEl.classList.remove("show-element")
+    searchForMoviesEl.classList.remove("hide-element")
+    searchForMoviesEl.classList.add("show-element")
+    searchBarContainerEl.classList.add("hide-element")
+    findYourFilmTitleEl.innerHTML = `<h1 id="find-your-film">My Watchlist</h1>`
     showLocalStorage()
 })
 
+
+searchForMoviesEl.addEventListener("click", () => {
+    myWatchListEl.classList.add("show-element")
+    myWatchListEl.classList.remove("hide-element")
+    searchForMoviesEl.classList.add("hide-element")
+    searchForMoviesEl.classList.remove("show-element")
+    searchBarContainerEl.classList.remove("hide-element")
+    findYourFilmTitleEl.innerHTML = `<h1 id="find-your-film">Find your film</h1>`
+    getSearchValueFromUser()
+})
+
 function showLocalStorage() {
-    
     clearMovieList()
     for (let i = 0; i < localStorage.length; i++) {
         console.log("local storage items: " + localStorage.key(i))
@@ -151,7 +166,7 @@ function showLocalStorage() {
                                 <div class="movie-detail-info-container">
                                     <p>${JSON.parse(localStorage.getItem(localStorage.key(i))).movieLength} min</p>
                                     <p>${JSON.parse(localStorage.getItem(localStorage.key(i))).movieGenre.join(", ")}</p>
-                                    <p class="delete-watchlist" id="${JSON.parse(localStorage.getItem(localStorage.key(i))).movieId}">➖ Watchlist</p> 
+                                    <p class="delete-watchlist" id="${JSON.parse(localStorage.getItem(localStorage.key(i))).movieId}">➖ Remove</p> 
                                 </div>
                                 <p class="movie-description">
                                     ${JSON.parse(localStorage.getItem(localStorage.key(i))).movieDescription}
@@ -159,8 +174,6 @@ function showLocalStorage() {
                             </div>
                         </div>
             `
-
-
         const watchlistRemoveEl = document.querySelectorAll(".delete-watchlist")
         watchlistRemoveEl.forEach(deleteWatchListButton => {
             deleteWatchListButton.addEventListener("click", () => {
@@ -176,10 +189,12 @@ function showLocalStorage() {
 function removeItemFromWatchlist(keyNumber){
     console.log("Item " + keyNumber + "removed from watchlist.")
     localStorage.removeItem(keyNumber)
+    showLocalStorage()
 }
 
 function clearLocalStorage(){
     localStorage.clear()
+    showLocalStorage()
     console.log("Local Storage Cleared!")
 }
 /*************LOCAL STORAGE**************/
@@ -187,7 +202,7 @@ function clearLocalStorage(){
 
 //************WATCHLIST SECTION************
 
-document.getElementById("my-watchlist").addEventListener("click", () => {
+/*document.getElementById("my-watchlist").addEventListener("click", () => {
     writeWatchlist()
 }) 
 
@@ -222,4 +237,6 @@ function writeWatchlist (){
             </div>
         </div>
     `
-}
+}*/
+
+//************WATCHLIST SECTION************
