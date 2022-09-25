@@ -18,7 +18,7 @@ let movieListArray = []
 let movieTabNum = 0
 let watchlistMovieList = []
 
-function getMovieById(moviteTitle, apiKey){
+function getMovieByName(moviteTitle, apiKey){
     fetch("https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&query=" + moviteTitle + "&include_adult=false")
         .then(response => response.json())
         .then(data => {
@@ -108,7 +108,7 @@ searchButtonEl.addEventListener("click", getSearchValueFromUser)
 
 function getSearchValueFromUser() {
     clearMovieList()
-    getMovieById(searchFieldEl.value, apiKey)
+    getMovieByName(searchFieldEl.value, apiKey)
 }
 /**********SEARCH BUTTON ****************/
 
