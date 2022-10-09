@@ -1,5 +1,5 @@
 
-const apiKey = ""
+const apiKey = "85e0ddaa475644eb02168b3435eb2efb"
 const imageUrl = "https://image.tmdb.org/t/p/w200"
 
 const movieListEl = document.querySelector(".movie-list-section")
